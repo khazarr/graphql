@@ -6,6 +6,13 @@ const {
   GraphQLSchema
 } = graphql
 
+// mock
+const books = [
+  {name: 'Lord of the rings', genere: 'Fantasy', id: 1},
+  {name: 'The final empire', genere: 'Fantasy', id: 2},
+  {name: 'The long Earth', genere: 'Sci-fi', id: 3}
+]
+
 const BookType = new GraphQLObjectType({
   name: 'Book',
   fields: () => ({
@@ -29,6 +36,7 @@ const RootQuery = new GraphQLObjectType({
       args: {id: {type: GraphQLString}},
       resolve(parent, args) {
         // code to get data from db
+        return books.find(book => book.id == args.id)
       }
     }
   }
