@@ -9,16 +9,41 @@ const {
 } = graphql
 
 // mock
-const books = [
-  {name: 'Lord of the rings', genere: 'Fantasy', id: 1},
-  {name: 'The final empire', genere: 'Fantasy', id: 2},
-  {name: 'The long Earth', genere: 'Sci-fi', id: 3}
+const books = [{
+    name: 'Lord of the rings',
+    genere: 'Fantasy',
+    id: 1,
+    authorId: 1
+  },
+  {
+    name: 'The final empire',
+    genere: 'Fantasy',
+    id: 2,
+    authorId: 2
+  },
+  {
+    name: 'The long Earth',
+    genere: 'Sci-fi',
+    id: 3,
+    authorId: 3
+  }
 ]
 
-const authors = [
-  {name: 'Tolkien', age: 60, id: 1},
-  {name: 'Terry Prachett', age: 42, id: 2},
-  {name: 'Brandon Sanderson', age: 66, id: 3}
+const authors = [{
+    name: 'Tolkien',
+    age: 60,
+    id: 1
+  },
+  {
+    name: 'Terry Prachett',
+    age: 42,
+    id: 2
+  },
+  {
+    name: 'Brandon Sanderson',
+    age: 66,
+    id: 3
+  }
 ]
 
 const BookType = new GraphQLObjectType({
@@ -32,6 +57,12 @@ const BookType = new GraphQLObjectType({
     },
     genere: {
       type: GraphQLString
+    },
+    author: {
+      type: AuthorType,
+      resolve(parent, args) {
+        return authors.find(author => author.id == parent.id)
+      }
     }
   })
 })
@@ -53,7 +84,7 @@ const AuthorType = new GraphQLObjectType({
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
-  fields:{
+  fields: {
     book: {
       type: BookType,
       args: {
@@ -68,9 +99,11 @@ const RootQuery = new GraphQLObjectType({
     },
     author: {
       type: AuthorType,
-      args: {id: {
-        type: GraphQLID
-      }},
+      args: {
+        id: {
+          type: GraphQLID
+        }
+      },
       resolve(parent, args) {
         return authors.find(author => author.id == args.id)
       }
