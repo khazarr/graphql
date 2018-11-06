@@ -5,11 +5,13 @@ const {
   GraphQLString,
   GraphQLSchema,
   GraphQLID,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } = graphql
 
 // mock
-const books = [{
+const books = [
+  {
     name: 'Lord of the rings',
     genere: 'Fantasy',
     id: 1,
@@ -26,24 +28,42 @@ const books = [{
     genere: 'Sci-fi',
     id: 3,
     authorId: 3
+  },
+  {
+    name: 'Hobbit',
+    genere: 'Fantasy',
+    id: 4,
+    authorId: 1
+  },
+  {
+    name: 'The color of magic',
+    genere: 'Fantasy',
+    id: 5,
+    authorId: 2
+  },
+  {
+    name: 'The Ligth Fantastic',
+    genere: 'Sci-fi',
+    id: 6,
+    authorId: 3
   }
 ]
 
 const authors = [{
-    name: 'Tolkien',
-    age: 60,
-    id: 1
-  },
-  {
-    name: 'Terry Prachett',
-    age: 42,
-    id: 2
-  },
-  {
-    name: 'Brandon Sanderson',
-    age: 66,
-    id: 3
-  }
+  name: 'Tolkien',
+  age: 60,
+  id: 1
+},
+{
+  name: 'Terry Prachett',
+  age: 42,
+  id: 2
+},
+{
+  name: 'Brandon Sanderson',
+  age: 66,
+  id: 3
+}
 ]
 
 const BookType = new GraphQLObjectType({
@@ -78,6 +98,12 @@ const AuthorType = new GraphQLObjectType({
     },
     age: {
       type: GraphQLInt
+    },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve (parent, args) {
+        return books.filter(book => book.authorId == parent.id)
+      }
     }
   })
 })
@@ -92,7 +118,7 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLID
         }
       },
-      resolve(parent, args) {
+      resolve (parent, args) {
         // code to get data from db
         return books.find(book => book.id == args.id)
       }
@@ -104,7 +130,7 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLID
         }
       },
-      resolve(parent, args) {
+      resolve (parent, args) {
         return authors.find(author => author.id == args.id)
       }
     }
