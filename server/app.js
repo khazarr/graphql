@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 7000
 const schema = require('./schema/schema')
 const moongose = require('mongoose')
 
+console.log('mongoURI', mongoURI)
+
 const app = express()
 
 const connectOptions = {
