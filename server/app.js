@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 7000
 const schema = require('./schema/schema')
 const moongose = require('mongoose')
 
-console.log('mongoURI', mongoURI)
-
 const app = express()
 
 const connectOptions = {
@@ -18,9 +16,6 @@ const connectOptions = {
 moongose.connect(mongoURI, connectOptions, (er, db) => {
   if (er) console.log(`Error`, er)
   console.log(`Connected to MongoDB`)
-})
-moongose.connection.once('open', () => {
-  console.log('connected to db ')
 })
 
 app.use('/graphql', graphqlHTTP({
