@@ -1,4 +1,7 @@
 const graphql = require('graphql')
+const Book = require('../models/book')
+const Author = require('../models/book')
+
 
 const {
   GraphQLObjectType,
@@ -9,62 +12,7 @@ const {
   GraphQLList
 } = graphql
 
-// mock
-const books = [
-  {
-    name: 'Lord of the rings',
-    genere: 'Fantasy',
-    id: 1,
-    authorId: 1
-  },
-  {
-    name: 'The final empire',
-    genere: 'Fantasy',
-    id: 2,
-    authorId: 2
-  },
-  {
-    name: 'The long Earth',
-    genere: 'Sci-fi',
-    id: 3,
-    authorId: 3
-  },
-  {
-    name: 'Hobbit',
-    genere: 'Fantasy',
-    id: 4,
-    authorId: 1
-  },
-  {
-    name: 'The color of magic',
-    genere: 'Fantasy',
-    id: 5,
-    authorId: 2
-  },
-  {
-    name: 'The Ligth Fantastic',
-    genere: 'Sci-fi',
-    id: 6,
-    authorId: 3
-  }
-]
 
-const authors = [{
-  name: 'Tolkien',
-  age: 60,
-  id: 1
-},
-{
-  name: 'Terry Prachett',
-  age: 42,
-  id: 2
-},
-{
-  name: 'Brandon Sanderson',
-  age: 66,
-  id: 3
-}
-]
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
